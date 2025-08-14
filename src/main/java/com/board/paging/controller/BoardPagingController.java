@@ -90,4 +90,47 @@ public class BoardPagingController {
 		return  mv;
 	}
 	
+	// http://localhost:9090/BoardPaging/WriteForm?nowpage=1&menu_id=MENU01
+	@RequestMapping("/BoardPaging/WriteForm")
+	public  ModelAndView  writeForm(int nowpage, String menu_id) {
+		
+		List<MenuDTO>  menuList  =  menuMapper.getMenuList();
+		
+		MenuDTO        menuDTO   =  menuMapper.getMenuByName(menu_id);
+		
+		ModelAndView   mv   =  new  ModelAndView();
+		mv.addObject("menuList",   menuList );
+		mv.addObject("nowpage",    nowpage  );
+		mv.addObject("menuDTO",    menuDTO  );
+		mv.setViewName("boardpaging/write");
+		return         mv;
+		
+	}
+	
+	@RequestMapping("/BoardPaging/Write")
+	public  ModelAndView   write( int nowpage, BoardDTO boardDTO ) {
+		
+		// 넘어온 글 저장
+		boardPagingMapper.insertBoard(  boardDTO  );
+		
+		ModelAndView   mv   =  new ModelAndView();
+		String         fmt  =  
+				"redirect:/BoardPaging/List?menu_id=%s&nowpage=%d";
+		String         loc  = String.format(fmt, 
+				boardDTO.getMenu_id(), nowpage);
+		mv.setViewName( loc );
+		return         mv;
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+

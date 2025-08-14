@@ -21,6 +21,14 @@
   
   </select>
   
+  <select id="getMenuByName">
+  
+    SELECT   MENU_ID, MENU_NAME, MENU_SEQ
+     FROM    MENUS
+     WHERE   MENU_ID =  #{ param1  }
+  
+  </select>
+  
 
   <!-- 메뉴 추가 -->
   <insert id="insertMenu">  

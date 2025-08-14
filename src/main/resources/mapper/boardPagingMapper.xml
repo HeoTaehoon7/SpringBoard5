@@ -32,6 +32,29 @@
        OFFSET  #{ param2 }  ROWS FETCH NEXT #{ param3 } ROWS ONLY
   
   </select>
+      
+  <!--  insertBoard -->
+  <select id="insertBoard">
+  
+     INSERT INTO BOARD (
+	    IDX,
+	    MENU_ID,
+	    TITLE,
+	    CONTENT,
+	    WRITER,
+	    REGDATE,
+	    HIT
+	) VALUES ( 
+  		( SELECT NVL(MAX(IDX),0)+1 FROM BOARD ) ,
+        #{ menu_id  },
+        #{ title    },
+        #{ content  },
+        #{ writer   },
+        SYSDATE,
+        0 
+    )  
+     
+  </select>    
          
   
   
