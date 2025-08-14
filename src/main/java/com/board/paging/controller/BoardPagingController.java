@@ -54,7 +54,7 @@ public class BoardPagingController {
 		// 페이징을 위한 초기설정
 		SearchDTO   searchDTO =  new SearchDTO();
 		searchDTO.setPage(nowpage);   // 현재 페이지 정보
-		searchDTO.setRecordSize(10);  // 페이지당 10 rows 가지고 온다
+		searchDTO.setRecordSize(2);  // 페이지당 10 rows 가지고 온다
 		searchDTO.setPageSize(10);    // paging.jsp 출력할 페이지번호수
 		
 		// Pagination 설정
@@ -64,16 +64,24 @@ public class BoardPagingController {
 		// ---------------------------------------------------
 		int  offset     = searchDTO.getOffset();      // 30  
 		int  recordSize = searchDTO.getRecordSize();  // 10;	   	
-		
+		String menu_id  = menuDTO.getMenu_id();
 		
 		List<BoardDTO> list = boardPagingMapper.getBoardPagingList(
-			     offset, recordSize	
+			     menu_id, offset, recordSize	
 			);
+		System.out.println("0:" +  list );
+		
 		response  =  new PageResponse<>(list, pagination);
 		
-		
+		menuDTO   =  menuMapper.getMenu( menuDTO );
+		System.out.println("menuDTO:" + menuDTO);
+				
 		ModelAndView   mv  =  new  ModelAndView();
-		mv.addObject("menuList", menuList);
+		mv.addObject("menuList",  menuList);
+		mv.addObject("menu_id",   menu_id);
+		mv.addObject("menuDTO",   menuDTO);
+		mv.addObject("searchDTO", searchDTO);
+		mv.addObject("nowpage",   nowpage);
 		
 		mv.addObject("response", response);
 		

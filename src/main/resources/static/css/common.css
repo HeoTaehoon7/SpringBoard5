@@ -68,5 +68,14 @@
   }
   
   
+  #paging td {  
+      width : 30px;
+      a:hover {
+         font-size:20px;
+         font-weight : bold;
+         color:red;
+      }
+  }
+  
   
   

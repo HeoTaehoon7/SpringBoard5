@@ -51,7 +51,7 @@
   <main>	
 
     <!-- 메뉴 리스트 -->
-    <%@include file="/WEB-INF/include/menus.jsp" %>
+    <%@include file="/WEB-INF/include/menuspaging.jsp" %>
 	
 	<%-- <h2>${ menu_id }게시물 목록</h2> --%>
 	<h2>${ menuDTO.menu_name } 게시물 목록</h2> 
@@ -69,15 +69,17 @@
 	  
 	  <tr>
 	    <td colspan="5">
-	      <a href="/Board/WriteForm?menu_id=${ menuDTO.menu_id }">새 게시물 추가</a>	 
+	      <a href="/BoardPaging/WriteForm?nowpage=${nowpage}&menu_id=${ menuDTO.menu_id }">
+	      새 게시물 추가
+	      </a>	 
 	    </td>
 	  </tr>
 	
-	  <c:forEach  var="board" items = "${ boardList }" >
+	  <c:forEach  var="board" items = "${ response.list }" >
 	  <tr>
 	    <td>${ board.idx      }</td>
 	    <td>
-	      <a href="/Board/View?idx=${ board.idx }">
+	      <a href="/BoardPaging/View?idx=${board.idx}&nowpage=${nowpage}&menu_id=${menu_id}">
 	    	${ board.title    }
 	      </a>	
 	    </td>
