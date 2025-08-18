@@ -168,9 +168,11 @@ public class BoardPagingController {
 		
 	}
 	
+	// Get 방식 전송 :  <a href="">, location.href="", redirect:
+	// query string 
 	// http://localhost:9090/BoardPaging/UpdateForm?idx=20&menu_id=MENU01&nowpage=1
 	@RequestMapping("/BoardPaging/UpdateForm")
-	public  ModelAndView   update(int idx, String menu_id, int nowpage) {
+	public  ModelAndView   updateForm(int idx, String menu_id, int nowpage) {
 		
 		List<MenuDTO>  menuList   =  menuMapper.getMenuList(); 
 		
@@ -187,6 +189,24 @@ public class BoardPagingController {
 		mv.addObject("nowpage",   nowpage  );		
 		mv.setViewName("boardpaging/update");
 		return         mv;
+	}
+	
+	// http://localhost:9090/BoardPaging/Update
+	// POST (FORM data) : id, menu_id, title, content, nowpage 
+	@RequestMapping("/BoardPaging/Update")
+	public  ModelAndView   update(int nowpage, BoardDTO boardDTO ) {
+		
+		// 넘어온 정보로 idx 번의 Board data 를 수정한다
+		boardPagingMapper.updateBoard( boardDTO  );
+		
+		String         menu_id =  boardDTO.getMenu_id(); 
+		
+		ModelAndView   mv      =  new ModelAndView();
+		String         fmt     =  "redirect:/BoardPaging/List?menu_id={0}&nowpage={1}";
+		String         loc     =  MessageFormat.format(fmt,
+				menu_id, nowpage);
+		mv.setViewName( loc );
+		return         mv;		
 	}
 	
 }

@@ -75,7 +75,7 @@
     <input type="hidden"  name="menu_id" value="${ board.menu_id }" /> 
     <input type="hidden"  name="nowpage" value="${ nowpage       }" /> 
     
-	<h2>${ menuDTO.menu_name } 게시글 내용 보기</h2>
+	<h2>${ menuDTO.menu_name } 게시글 수정 하기</h2>
 	<table id="table">
 		<tr>
 			<td>글번호</td>
