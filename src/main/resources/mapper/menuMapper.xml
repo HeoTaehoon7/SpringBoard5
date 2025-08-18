@@ -21,7 +21,7 @@
   
   </select>
   
-  <select id="getMenuByName">
+  <select id="getMenuName">
   
     SELECT   MENU_ID, MENU_NAME, MENU_SEQ
      FROM    MENUS

@@ -32,7 +32,39 @@
        OFFSET  #{ param2 }  ROWS FETCH NEXT #{ param3 } ROWS ONLY
   
   </select>
+  
+  <select  id="getBoard">
+  
+   SELECT
+	    IDX,
+	    MENU_ID,
+	    TITLE,
+	    CONTENT ,
+	    WRITER,
+	    TO_CHAR(REGDATE, 'YYYY-MM-DD HH24:MI:SS DAY') REGDATE,
+	    HIT
+	FROM
+	    BOARD
+    WHERE    IDX   =  #{ idx }
       
+  </select>
+  
+  <select  id="getBoardByIdx">
+  
+   SELECT
+	    IDX,
+	    MENU_ID,
+	    TITLE,
+	    CONTENT ,
+	    WRITER,
+	    TO_CHAR(REGDATE, 'YYYY-MM-DD HH24:MI:SS DAY') REGDATE,
+	    HIT
+	FROM
+	    BOARD
+    WHERE    IDX   =  #{ param1 }
+      
+  </select>
+        
   <!--  insertBoard -->
   <select id="insertBoard">
   
@@ -55,7 +87,14 @@
     )  
      
   </select>    
-         
+     
+  <!-- int idx -> param1 -->   
+  <update  id="incHit">
+     UPDATE   BOARD
+      SET     HIT = HIT + 1
+      WHERE   IDX  =  #{ param1 }
+  
+  </update>    
   
   
   

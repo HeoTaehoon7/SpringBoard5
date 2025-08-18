@@ -96,7 +96,7 @@ public class BoardPagingController {
 		
 		List<MenuDTO>  menuList  =  menuMapper.getMenuList();
 		
-		MenuDTO        menuDTO   =  menuMapper.getMenuByName(menu_id);
+		MenuDTO        menuDTO   =  menuMapper.getMenuName(menu_id);
 		
 		ModelAndView   mv   =  new  ModelAndView();
 		mv.addObject("menuList",   menuList );
@@ -121,6 +121,37 @@ public class BoardPagingController {
 		mv.setViewName( loc );
 		return         mv;
 	}
+	
+	// http://localhost:9090/BoardPaging/View?idx=21&nowpage=1&menu_id=MENU01
+	@RequestMapping("/BoardPaging/View")
+	public  ModelAndView  view( int idx, int nowpage, String menu_id ) {
+		
+		List<MenuDTO>  menuList  =  menuMapper.getMenuList();
+		
+		// 해당게시물의 조회수를 증가한다
+		boardPagingMapper.incHit( idx  );
+		
+		// 보여줄 게시물의 정보 조회 (idx)
+		BoardDTO       board     =  boardPagingMapper.getBoardByIdx( idx );
+		
+		
+		// board Content \n -> <br>
+		String         content   =  board.getContent();
+		content                  =  content.replace("\n", "<br>");
+		board.setContent( content );
+		
+		MenuDTO        menuDTO   =  menuMapper.getMenuName( menu_id );		
+		
+		ModelAndView   mv  =  new ModelAndView();
+		mv.addObject("menuList", menuList  );
+		mv.addObject("menuDTO",  menuDTO   );
+		mv.addObject("board",    board     );
+		mv.addObject("nowpage",  nowpage   );
+		mv.setViewName( "boardpaging/view" );
+		return         mv;
+		
+	}
+	
 	
 }
 
