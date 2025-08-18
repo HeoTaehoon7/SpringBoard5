@@ -100,7 +100,7 @@
 			const goListEl = document.getElementById('goList')
 			goListEl.onclick = function() {
 				location.href = '/Board/List?menu_id=${ menuDTO.menu_id }'
-			}
+			} 
 
 			const formEl = document.querySelectorAll("form")[0];
 			const titleEl = document.querySelector('[name="title"]');
