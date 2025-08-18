@@ -168,6 +168,27 @@ public class BoardPagingController {
 		
 	}
 	
+	// http://localhost:9090/BoardPaging/UpdateForm?idx=20&menu_id=MENU01&nowpage=1
+	@RequestMapping("/BoardPaging/UpdateForm")
+	public  ModelAndView   update(int idx, String menu_id, int nowpage) {
+		
+		List<MenuDTO>  menuList   =  menuMapper.getMenuList(); 
+		
+		// 넘겨줄 현재 메뉴의 정보
+		MenuDTO       menuDTO     =  menuMapper.getMenuName(menu_id);   
+		
+		// 넘어온 글번호로 수정할 게시글을 조회
+		BoardDTO      board       =  boardPagingMapper.getBoardByIdx(idx);		
+		
+		ModelAndView   mv         =  new   ModelAndView();
+		mv.addObject("menuList",  menuList );		
+		mv.addObject("menuDTO",   menuDTO  );		
+		mv.addObject("board",     board    );		
+		mv.addObject("nowpage",   nowpage  );		
+		mv.setViewName("boardpaging/update");
+		return         mv;
+	}
+	
 }
 
 

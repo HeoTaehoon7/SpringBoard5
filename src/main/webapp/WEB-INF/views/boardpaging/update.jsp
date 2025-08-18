@@ -8,14 +8,23 @@
 <link rel="icon" type="image/ico" href="/img/favicon.ico" />
 <link rel="stylesheet"  href="/css/common.css" />
 
+<!-- bootstrap  -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/browser-scss@1.0.3/dist/browser-scss.min.js"></script>
+<script src="https://code.jquery.com/jquery.min.js"></script>
 <style>
-  #table {
+ #table {
   margin-bottom : 150px; 
   td {
      text-align : center;
      padding    : 10px;
-     border     : 1px solid silver;
+     border     : 1px solid silver; 
      
+     input[type="text"]   { width : 100%;  }
+     textarea             { width : 100%;  height: 250px; }
+      
      &:nth-of-type(1) {
          width             :  150px;
          background-color  :  black;
@@ -54,15 +63,19 @@
  }
 
 </style>
-
 </head>
 <body>
   <main>
     
     <!-- 메뉴 리스트 -->
-   <%@include file="/WEB-INF/include/menuspaging.jsp" %>
+    <%@include file="/WEB-INF/include/menuspaging.jsp" %>
 
-	<h2>${ menuDTO.menu_name } 게시글 수정 하기</h2>
+    <form  action="/BoardPaging/Update" method="POST">
+    <input type="hidden"  name="idx"     value="${ board.idx     }" /> 
+    <input type="hidden"  name="menu_id" value="${ board.menu_id }" /> 
+    <input type="hidden"  name="nowpage" value="${ nowpage       }" /> 
+    
+	<h2>${ menuDTO.menu_name } 게시글 내용 보기</h2>
 	<table id="table">
 		<tr>
 			<td>글번호</td>
@@ -78,54 +91,32 @@
 		</tr>
 		<tr>
 			<td>제목</td>
-			<td colspan="3">${ board.title }</td>
+			<td colspan="3">
+			<input type="text" name="title"  value="${ board.title }" />
+			</td>
 		</tr>
 		<tr>
 			<td>내용</td>
-			<td colspan="3">${ board.content } </td>
+			<td colspan="3">			
+			<textarea name="content">${ board.content }</textarea>
+			</td>
 		</tr>
 		<tr>
 			<td colspan="4">
-			[<a href="/BoardPaging/WriteForm?menu_id=${board.menu_id}&nowpage=${nowpage}">새글 쓰기</a>]&nbsp;&nbsp;
-			[<a href="/BoardPaging/UpdateForm?idx=${board.idx}&menu_id=${board.menu_id}&nowpage=${nowpage}">수정</a>]&nbsp;&nbsp;
-			[<a href="/BoardPaging/Delete?idx=${board.idx}&menu_id=${board.menu_id}&nowpage=${nowpage}">삭제</a>]&nbsp;&nbsp;
-			[<a href="/BoardPaging/List?menu_id=${board.menu_id}&nowpage=${nowpage}">목록</a>]&nbsp;&nbsp; 
-			[<a href="/">Home</a>]			
+			  <input class="btn btn-dark btn-sm" 
+			    type="submit" value="수정" /> &nbsp;&nbsp;
+		      <a   class="btn btn-dark btn-sm" 
+		        href="/BoardPaging/List?menu_id=${board.menu_id}&nowpage=${nowpage}">목록</a>&nbsp;&nbsp; 
+			  <a    class="btn btn-dark btn-sm"   
+			    href="/">Home</a>			
 			</td>
 		</tr>
 	</table>
+	
+	</form>
+	
   </main>	
     
-  <script>
-			const goListEl = document.getElementById('goList')
-			goListEl.onclick = function() {
-				location.href = '/BoardPaging/List?menu_id=${ menuDTO.menu_id }&nowpage=${nowpage}'
-			} 
-
-			const formEl = document.querySelectorAll("form")[0];
-			const titleEl = document.querySelector('[name="title"]');
-			const writerEl = document.querySelector('[name="writer"]');
-			formEl.addEventListener('submit', function(e) {
-				if (titleEl.value == "") {
-					alert("제목이 입력되지 않았습니다")
-					titleEl.focus()
-					e.preventDefault();
-					e.stopPropagation();
-					return false;
-				}
-
-				if (writerEl.value == "") {
-					alert("작성자가 입력되지 않았습니다")
-					writerEl.focus()
-					e.preventDefault();
-					e.stopPropagation();
-					return false;
-				}
-
-				return true;
-			})
-		</script>
-  
   
   
 </body>
