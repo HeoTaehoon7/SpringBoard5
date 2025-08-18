@@ -22,6 +22,8 @@ public interface BoardPagingMapper {
 
 	void incHit(int idx);
 
+	void deleteBoard(String idx);
+
 
 
 

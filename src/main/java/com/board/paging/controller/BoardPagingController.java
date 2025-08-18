@@ -1,5 +1,6 @@
 package com.board.paging.controller;
 
+import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.List;
 
@@ -152,8 +153,24 @@ public class BoardPagingController {
 		
 	}
 	
+	// http://localhost:9090/BoardPaging/Delete?idx=22&menu_id=MENU01&nowpage=1
+	@RequestMapping("/BoardPaging/Delete")
+	public  ModelAndView   delete(String idx, String menu_id, int nowpage ) {
+		
+		// 넘어온 idx 로 게시글을 삭제한다
+		boardPagingMapper.deleteBoard( idx );
+		
+		ModelAndView   mv   =  new  ModelAndView();
+		String         fmt  =  "redirect:/BoardPaging/List?menu_id={0}&nowpage={1}";
+		String         loc  =  MessageFormat.format(fmt, menu_id, nowpage );
+		mv.setViewName( loc );
+		return         mv;
+		
+	}
 	
 }
+
+
 
 
 

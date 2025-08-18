@@ -96,6 +96,14 @@
   
   </update>    
   
+  <!-- IDX 롤 글삭제 int idx -> param1 -->
+  <delete  id="deleteBoard">
+  	
+  	DELETE   FROM  BOARD
+  	 WHERE   IDX   =  #{ param1 }  
+  
+  </delete>
+  
   
   
 </mapper>

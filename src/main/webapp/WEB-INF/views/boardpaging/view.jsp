@@ -99,7 +99,7 @@
   <script>
 			const goListEl = document.getElementById('goList')
 			goListEl.onclick = function() {
-				location.href = '/Board/List?menu_id=${ menuDTO.menu_id }'
+				location.href = '/BoardPaging/List?menu_id=${ menuDTO.menu_id }&nowpage=${nowpage}'
 			} 
 
 			const formEl = document.querySelectorAll("form")[0];
